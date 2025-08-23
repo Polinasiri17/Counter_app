@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <h2>Weather App</h2>
+        <button onclick="getWeather()">Get Weather</button>
+        <pre id="output"></pre>
+        <script>
+            function getWeather(){
+                let latitude="17.385";
+                let longitude="78.4867";
+                let url="https://api.open-meteo.com/v1"
+                        + "/forecast?latitude="+ latitude
+                        + "&longitude=" + longitude
+                        + "&current_weather=true";
+                        //const return_value=fetch(url)
+                        //console.log(return_value);
+            fetch(url)
+            .then(response => response.json())
+            .then(data =>{
+                  let temperature=data.current_weather.temperature;
+                  let units=data.current_weather_units.temperature;
+                  let Windspeed=data.current_weather.windspeed;
+                  let wind=data.current_weather_units.windspeed;
+                  document.getElementById("output").textContent
+                             
+                             ="Current Windspeed "+Windspeed+""+wind;
+            }
+            );
+            }
+        </script>
+    </body>
+</html>

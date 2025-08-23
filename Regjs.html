@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button[type="reset"] {
+      background-color: #6c757d;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h2>Student Registration Form</h2>
+  <form id="regForm">
+    <label for="fullname">Full Name:</label>
+    <input type="text" id="fullname" name="fullname" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob">
+    <label>Gender:</label>
+    <input type="radio" id="male" name="gender" value="Male">
+    <label for="male">Male</label>
+    <input type="radio" id="female" name="gender" value="Female">
+    <label for="female">Female</label>
+    <input type="radio" id="other" name="gender" value="Other">
+    <label for="other">Other</label>
+    <label for="department">Department:</label>
+    <select id="department" name="department">
+      <option value="">--Select--</option>
+      <option value="CSE">Computer Science</option>
+      <option value="ECE">Electronics</option>
+      <option value="EEE">Electrical</option>
+      <option value="MECH">Mechanical</option>
+      <option value="CIVIL">Civil</option>
+    </select>
+    <label>Skills:</label>
+    <input type="checkbox" id="html" name="skills" value="HTML">
+    <label for="html">HTML</label>
+    <input type="checkbox" id="css" name="skills" value="CSS">
+    <label for="css">CSS</label>
+    <input type="checkbox" id="js" name="skills" value="JavaScript">
+    <label for="js">JavaScript</label>
+    <input type="checkbox" id="react" name="skills" value="React">
+    <label for="react">React</label>
+    <label for="address">Address:</label>
+    <textarea id="address" name="address" rows="4"></textarea>
+    <label for="photo">Upload Photo:</label>
+    <input type="file" id="photo" name="photo">
+    <br><br>
+    <button type="submit">Register</button>
+    <button type="reset">Reset</button>
+  </form>
+  <table id="dataTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Gender</th>
+        <th>Department</th>
+        <th>Skills</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    const form = document.getElementById("regForm");
+    const table = document.getElementById("dataTable");
+    const tbody = table.querySelector("tbody");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const fullname = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const dob = document.getElementById("dob").value;
+      const gender = document.querySelector("input[name='gender']:checked")?.value || "";
+      const department = document.getElementById("department").value;
+      const address = document.getElementById("address").value;
+      const skills = Array.from(document.querySelectorAll("input[name='skills']:checked"))
+                          .map(skill => skill.value)
+                          .join(", ");
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      students.push({ fullname, email, dob, gender, department, skills, address });
+      localStorage.setItem("students", JSON.stringify(students));
+      displayData();
+      form.reset();
+    });
+    function displayData() {
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      tbody.innerHTML = "";
+      if (students.length > 0) {
+        table.style.display = "table";
+        students.forEach(student => {
+          let row = `<tr>
+            <td>${student.fullname}</td>
+            <td>${student.email}</td>
+            <td>${student.dob}</td>
+            <td>${student.gender}</td>
+            <td>${student.department}</td>
+            <td>${student.skills}</td>
+            <td>${student.address}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      } else {
+        table.style.display = "none";
+      }
+    }
+    window.onload = displayData;
+  </script>
+</body>
+</html>

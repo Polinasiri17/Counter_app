@@ -1,0 +1,18 @@
+<html>
+    <body>
+    <script>
+        <button>Click</button>
+        const btn=document.querySelector("button");
+        function random(max){
+             return Math.floor(Math.random()*max);
+        }
+        function changeBackground(){
+            const r=random(255);
+            const g=random(255);
+            const b=random(255);
+            document.body.style.backgroundColor="rgb("+r+", "+ g +", "+ b +")";
+        }
+        btn.addEventListener("click",changeBackground);
+           </script>
+           </body>
+</html>

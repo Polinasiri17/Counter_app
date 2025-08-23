@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <h2>Weather App</h2>
+        <button onclick="getWeather()">Get Weather</button>
+        <pre id="output"></pre>
+        <script>
+           async function getWeather(){
+            let url="https://api.open-meteo.com/v1/forecast?"
+                    + "latitude=19.80675&longitude=89.765"
+                    + "&current_weather=true;"
+           
+           let value=await fetch(url)
+           let data=await value.json();
+           let temp=data.current_weather.temperature;
+           let units=data.current_weather_units.temperature;
+           document.getElementById("output").textContent
+                   ="Current Temperature using async await is: "+temp+""+units;
+           } 
+          /*async function getWeather(){
+              
+                let url="https://api.open-meteo.com/v1/forecast?"
+                        + "latitude=17.385&longitude=78.4867"
+                        + "&current_weather=true";
+
+
+                let value = await fetch(url);
+                let data = await value.json();
+                let temp = data.current_weather.temperature;  
+                let units = data.current_weather_units.temperature;            
+            
+                document.getElementById("output").textContent
+                   ="Current Temperature using async await is:"+temp+" "+units;
+            
+            }
+        </script>
+    </body>
+</html>

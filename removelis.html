@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <button id="startbtn">Start</button>
+         <button id="stopbtn">Stop</button>
+         <button id="colorbtn">click</button>
+         <button id="mixbtn">Mix color</button>
+         <script>
+            const startbtn=document.getElementById("startbtn");
+            const stopbtn=document.getElementById("stopbtn");
+             const colorbtn=document.getElementById("colorbtn");
+             const mixbtn=document.getElementById("mixbtn");
+            function random(max){
+             return Math.floor(Math.random()*max);
+        }
+        function changeBackground(){
+            const r=random(255);
+            const g=random(255);
+            const b=random(255);
+            document.body.style.backgroundColor="rgb("+r+", "+ g +", "+ b +")";
+        }
+        colorbtn.addEventListener("click",()=>{
+             document.body.style.backgroundColor= "rgb(0,0,0)";
+        });
+        mixbtn.addEventListener("click",()=>{
+            document.addEventListener("click",changeBackground)
+        })
+
+        startbtn.addEventListener("click" ,() => {
+             document.addEventListener("mousemove",changeBackground);
+        });
+        stopbtn.addEventListener("click" ,() => {
+             document.removeEventListener("mousemove",changeBackground);
+        });
+        
+         </script>
+    </body>
+</html>
